@@ -47,13 +47,13 @@ const TimerBar: React.FC<TimerBarProps> = ({ timeRemaining }) => {
   const percentageRemaining = (interpolatedTime / totalTime) * 100;
 
   return (
-    <div className="w-full h-6 bg-gray-200 rounded-full overflow-hidden relative">
+    <div className="w-full h-10 bg-background-light bauhaus-border relative overflow-hidden">
       <div
-        className="h-full bg-green-500 transition-all duration-100 ease-linear"
+        className="h-full bg-secondary transition-all duration-100 ease-linear"
         style={{ width: `${percentageRemaining}%` }}
       />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-sm font-semibold text-white">{Math.ceil(interpolatedTime)} seconds left</span>
+        <span className="text-lg font-black text-text-primary uppercase mix-blend-difference">{Math.ceil(interpolatedTime)} SECONDS LEFT</span>
       </div>
     </div>
   );

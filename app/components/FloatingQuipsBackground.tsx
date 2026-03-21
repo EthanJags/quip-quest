@@ -18,42 +18,69 @@ const quips: string[] = [
   "Quip, quip hooray",
 ];
 
-class Bubble {
+const colors = ["#E32636", "#00509E", "#FFD700"];
+const shapes = ["square", "circle", "triangle"];
+
+class Shape {
   x: number;
   y: number;
   size: number;
   speed: number;
   quip: string;
-  opacity: number;
+  color: string;
+  shapeType: string;
+  rotation: number;
+  rotationSpeed: number;
 
   constructor(canvasWidth: number, canvasHeight: number) {
     this.x = Math.random() * canvasWidth;
     this.y = Math.random() * canvasHeight;
-    this.size = Math.random() * 100 + 50;
+    this.size = Math.random() * 80 + 40;
     this.speed = Math.random() * 2 + 0.5;
     this.quip = quips[Math.floor(Math.random() * quips.length)];
-    this.opacity = 0;
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotationSpeed = (Math.random() - 0.5) * 0.02;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity * 0.1})`;
-    ctx.fill();
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
 
-    ctx.font = `${this.size / 5}px Arial`;
-    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+    ctx.fillStyle = this.color;
+    ctx.strokeStyle = "#1A1A1A";
+    ctx.lineWidth = 4;
+
+    ctx.beginPath();
+    if (this.shapeType === "square") {
+      ctx.rect(-this.size / 2, -this.size / 2, this.size, this.size);
+    } else if (this.shapeType === "circle") {
+      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+    } else if (this.shapeType === "triangle") {
+      ctx.moveTo(0, -this.size / 2);
+      ctx.lineTo(this.size / 2, this.size / 2);
+      ctx.lineTo(-this.size / 2, this.size / 2);
+      ctx.closePath();
+    }
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.restore();
+
+    ctx.font = `bold ${this.size / 5}px Arial`;
+    ctx.fillStyle = "#1A1A1A";
     ctx.textAlign = "center";
-    ctx.fillText(this.quip, this.x, this.y);
+    ctx.fillText(this.quip.toUpperCase(), this.x, this.y + this.size / 2 + 20);
   }
 
   update(canvasHeight: number) {
     this.y -= this.speed;
-    this.opacity += 0.005;
+    this.rotation += this.rotationSpeed;
 
-    if (this.y + this.size < 0) {
-      this.y = canvasHeight + this.size;
-      this.opacity = 0;
+    if (this.y + this.size < -50) {
+      this.y = canvasHeight + this.size + 50;
     }
   }
 }
@@ -75,16 +102,16 @@ const FloatingQuipsBackground: React.FC = () => {
 
     setCanvasSize();
 
-    const bubbles: Bubble[] = [];
-    for (let i = 0; i < 20; i++) {
-      bubbles.push(new Bubble(canvas.width, canvas.height));
+    const shapesArr: Shape[] = [];
+    for (let i = 0; i < 15; i++) {
+      shapesArr.push(new Shape(canvas.width, canvas.height));
     }
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      bubbles.forEach((bubble) => {
-        bubble.update(canvas.height);
-        bubble.draw(ctx);
+      shapesArr.forEach((shape) => {
+        shape.update(canvas.height);
+        shape.draw(ctx);
       });
       requestAnimationFrame(animate);
     };
@@ -99,31 +126,18 @@ const FloatingQuipsBackground: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(to bottom, #000033, #000066)",
-          zIndex: -1,
-        }}
-      />
-      <style jsx>{`
-        canvas {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(to bottom, #000033, #000066);
-          z-index: -1;
-        }
-      `}</style>
-    </>
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+        opacity: 0.5,
+      }}
+    />
   );
 };
 

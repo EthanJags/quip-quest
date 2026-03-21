@@ -28,37 +28,37 @@ const Voting: React.FC<{
     <button
       key={`${playerId}`}
       onClick={() => setSelectedAnswerId(answer.submittedBy)}
-      className={`w-full p-4 mb-3 text-left rounded-lg transition-colors duration-200 ${
+      className={`w-full p-4 mb-4 text-left bauhaus-border transition-colors duration-200 ${
         selectedAnswerId === answer.submittedBy
-          ? "bg-indigo-100 border-2 border-indigo-500"
-          : "bg-gray-100 hover:bg-gray-200"
+          ? "bg-primary border-text-primary scale-[1.02]"
+          : "bg-background-light hover:bg-gray-200"
       }`}
     >
-      <img src={answer.drawing} alt="Drawing" className="w-full rounded" />
+      <img src={answer.drawing} alt="Drawing" className="w-full bauhaus-border" />
     </button>
   ));
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <h1 className="text-3xl font-bold mb-6 text-indigo-700">Vote for a Drawing</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl w-full mb-6">
-        <p className="text-lg text-gray-700 mb-6">Prompt: {question}</p>
-        <div className="space-y-2">
+    <div className="flex flex-col items-center justify-center h-full font-sans">
+      <h1 className="text-4xl font-black mb-8 text-text-primary uppercase tracking-widest text-center">Vote for a Drawing</h1>
+      <div className="bg-accent bauhaus-border p-6 max-w-2xl w-full mb-8">
+        <p className="text-2xl font-bold text-text-primary mb-6 uppercase text-center border-b-4 border-text-primary pb-4">Prompt: {question}</p>
+        <div className="space-y-4">
           {answerOptions.length > 0 ? (
             answerOptions
           ) : (
-            <p className="text-center text-gray-500 font-semibold">No answers to vote on</p>
+            <p className="text-center text-text-primary font-bold uppercase">No answers to vote on</p>
           )}
         </div>
       </div>
       <button
         onClick={handleSubmit}
         disabled={!selectedAnswerId}
-        className={`px-6 py-3 rounded-lg font-bold text-white transition-colors duration-200 ${
-          selectedAnswerId ? "bg-green-500 hover:bg-green-600" : "bg-gray-400 cursor-not-allowed"
+        className={`w-full max-w-md py-4 px-6 bauhaus-button text-xl uppercase ${
+          selectedAnswerId ? "bg-secondary text-background-light hover:bg-secondary-dark" : "bg-gray-400 text-text-primary cursor-not-allowed"
         }`}
       >
-        Submit Vote
+        SUBMIT VOTE
       </button>
     </div>
   );

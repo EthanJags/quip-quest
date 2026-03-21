@@ -102,25 +102,24 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background-light  flex flex-col items-center justify-center p-4 relative z-10">
-      <div className="text-center mb-8 p-4 bg-black bg-opacity-50 rounded-lg animate-fade-in">
-  <h1 className="text-5xl font-extrabold mb-2 text-white text-shadow-lg">
-    Welcome to QuipQuest!
-    </h1>
-  <p className="text-2xl font-bold text-white text-shadow-md italic">
-    Where wit meets laughter!
-  </p>
-</div>
-      {/* <QuestionMarkBackground /> */}
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4 relative z-10 font-sans">
+      <div className="text-center mb-12 p-8 bauhaus-card bg-accent">
+        <h1 className="text-6xl font-black mb-4 text-text-primary uppercase tracking-widest">
+          QuipQuest
+        </h1>
+        <p className="text-2xl font-bold text-text-primary uppercase">
+          Where wit meets laughter
+        </p>
+      </div>
       <FloatingQuipsBackground />
-      <div className="bg-background p-8 rounded-lg shadow-md w-full max-w-md">
+      <div className="p-8 w-full max-w-md bauhaus-card bg-background-light relative z-20">
         <input
           type="text"
           autoFocus
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
-          className="w-full px-4 py-2 mb-4 border border-background-dark rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-color-primary placeholder-gray-400"
+          placeholder="ENTER YOUR NAME"
+          className="w-full px-4 py-3 mb-6 bauhaus-input text-lg placeholder-text-placeholder"
         />
         <input
           type="text"
@@ -128,50 +127,50 @@ export default function Home() {
           pattern="[0-9]*"
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="Enter game code (to join)"
-          className="w-full px-4 py-2 mb-4 border border-background-dark rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-color-primary placeholder-gray-400"
+          placeholder="ENTER GAME CODE"
+          className="w-full px-4 py-3 mb-8 bauhaus-input text-lg placeholder-text-placeholder"
         />
-        <div className="flex space-x-4 mb-4">
+        <div className="flex flex-col space-y-4 mb-6">
           <button
             onClick={handleHostClick}
-            className="w-1/2 bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition duration-300"
+            className="w-full bg-primary text-background-light py-4 px-6 bauhaus-button text-xl hover:bg-primary-dark"
           >
-            Host
+            Host Game
           </button>
           <button
             onClick={handleJoinClick}
-            className={`w-1/2 py-2 px-4 rounded-md text-white transition duration-300 ${
+            className={`w-full py-4 px-6 bauhaus-button text-xl text-background-light ${
               isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-secondary hover:bg-secondary-dark"
             }`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Joining..." : "Join"}
+            {isSubmitting ? "JOINING..." : "JOIN GAME"}
           </button>
         </div>
         <button
           onClick={toggleRules}
-          className="w-full bg-background-dark text-primary py-2 px-4 rounded-md hover:bg-background transition duration-300"
+          className="w-full bg-accent text-text-primary py-3 px-4 bauhaus-button hover:bg-yellow-400"
         >
-          View Rules
+          VIEW RULES
         </button>
-        {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+        {error && <p className="mt-6 text-primary font-bold text-center uppercase">{error}</p>}
       </div>
   
       {showRules && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-md p-6 max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4 text-primary-dark">QuipQuest Rules</h2>
-            <ul className="list-disc pl-5 mb-4 text-black">
-              <li>Players take turns answering prompts with witty responses.</li>
-              <li>Other players vote for their favorite answers.</li>
-              <li>Points are awarded based on votes received.</li>
-              <li>The player with the most points at the end wins!</li>
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 p-4">
+          <div className="bauhaus-card bg-background-light p-8 max-w-md w-full">
+            <h2 className="text-3xl font-black mb-6 text-text-primary uppercase border-b-4 border-text-primary pb-2">Rules</h2>
+            <ul className="list-square pl-6 mb-8 text-text-primary font-bold space-y-2 text-lg">
+              <li>Players take turns answering prompts.</li>
+              <li>Vote for your favorite answers.</li>
+              <li>Points are awarded based on votes.</li>
+              <li>The player with the most points wins.</li>
             </ul>
             <button
               onClick={toggleRules}
-              className="w-full bg-secondary text-white py-2 px-4 rounded-md hover:bg-secondary-dark transition duration-300"
+              className="w-full bg-primary text-background-light py-3 px-4 bauhaus-button text-xl"
             >
-              Close
+              CLOSE
             </button>
           </div>
         </div>
