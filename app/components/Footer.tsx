@@ -60,37 +60,37 @@ const Footer: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <footer className="py-6 px-4 border-t border-background-dark bg-white">
+    <footer className="py-6 px-4 border-t-4 border-text-primary bg-background-light font-sans relative z-50">
       <div className="container mx-auto flex justify-between items-center">
-        <p className="text-sm text-gray-600">
+        <p className="text-lg font-bold text-text-primary uppercase">
           {language === "english" ? "Made by " : language === "spanish" ? "Hecho por " : "द्वारा बनाया गया "}
           <a
             href="https://ethanjagoda.com"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ textDecoration: "underline" }}
+            className="border-b-4 border-text-primary hover:text-primary transition-colors"
           >
             Ethan Jagoda
           </a>
         </p>
-        <div className="flex space-x-2">
+        <div className="flex space-x-4">
           <button
             onClick={() => dispatch(setLanguage("english"))}
-            className={`p-1 rounded-md hover:bg-gray-200 transition duration-300 ${language === "english" ? "opacity-100" : "opacity-50"}`}
+            className={`p-2 border-4 border-text-primary transition duration-300 ${language === "english" ? "bg-primary" : "bg-background-light hover:bg-gray-200"}`}
             aria-label="Change to English"
           >
             <USFlag />
           </button>
           <button
             onClick={() => dispatch(setLanguage("spanish"))}
-            className={`p-1 rounded-md hover:bg-gray-200 transition duration-300 ${language === "spanish" ? "opacity-100" : "opacity-50"}`}
+            className={`p-2 border-4 border-text-primary transition duration-300 ${language === "spanish" ? "bg-primary" : "bg-background-light hover:bg-gray-200"}`}
             aria-label="Cambiar a Español"
           >
             <SpainFlag />
           </button>
           <button
             onClick={() => dispatch(setLanguage("hindi"))}
-            className={`p-1 rounded-md hover:bg-gray-200 transition duration-300 ${language === "hindi" ? "opacity-100" : "opacity-50"}`}
+            className={`p-2 border-4 border-text-primary transition duration-300 ${language === "hindi" ? "bg-primary" : "bg-background-light hover:bg-gray-200"}`}
             aria-label="हिंदी में बदलें"
           >
             <IndiaFlag />

@@ -18,26 +18,26 @@ const PlayerInfo: React.FC<PlayerInfoProps> = ({ players, socket, currentPlayerI
   };
 
   return (
-    <div className="bg-background rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-primary mb-4">Players</h2>
-      <ul className="space-y-2">
+    <div className="bg-background-light bauhaus-border p-6 font-sans">
+      <h2 className="text-3xl font-black text-text-primary mb-6 uppercase tracking-widest border-b-4 border-text-primary pb-2">Players</h2>
+      <ul className="space-y-4">
         {sortedPlayers.map((player) => (
           <li
             key={player.id}
-            className="flex items-center justify-between p-3 rounded-lg bg-background-light mode-dark:bg-background-dark"
+            className="flex items-center justify-between p-4 bauhaus-border bg-background-light"
           >
             <div className="flex items-center">
-              <span className="font-semibold text-text">{player.name}</span>
-              {player.isHost && <span className="ml-2 text-sm text-secondary">(Host)</span>}
+              <span className="font-bold text-xl text-text-primary uppercase">{player.name}</span>
+              {player.isHost && <span className="ml-3 px-2 py-1 bg-primary text-background-light text-xs font-black uppercase border-2 border-text-primary">HOST</span>}
             </div>
             <div className="flex items-center">
-              <span className="font-bold text-primary mr-4">{player.score}</span>
+              <span className="font-black text-2xl text-text-primary mr-4">{player.score}</span>
               {currentPlayer.isHost && currentPlayer.id !== player.id && (
                 <button
                   onClick={() => handleKickPlayer(player.id)}
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded text-sm transition duration-300"
+                  className="bg-primary text-background-light font-bold py-2 px-4 bauhaus-button text-sm hover:bg-primary-dark"
                 >
-                  Kick
+                  KICK
                 </button>
               )}
             </div>

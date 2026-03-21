@@ -18,8 +18,11 @@ const Answering: React.FC<{
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <p className="text-xl font-semibold text-gray-700 mb-4">Prompt: {question}</p>
+    <div className="flex flex-col items-center w-full font-sans">
+      <div className="bg-accent bauhaus-border p-4 mb-6 w-full text-center">
+        <p className="text-2xl font-black text-text-primary uppercase tracking-wide">Prompt:</p>
+        <p className="text-3xl font-bold text-text-primary">{question}</p>
+      </div>
       <DrawingCanvas onSubmit={handleSubmit} />
     </div>
   );

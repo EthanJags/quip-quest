@@ -89,12 +89,12 @@ const DrawingCanvas: React.FC<{
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full font-sans">
       <canvas
         ref={canvasRef}
         width={400}
         height={300}
-        className="border-2 border-gray-300 rounded-lg bg-white cursor-crosshair w-full max-w-[400px]"
+        className="bauhaus-border bg-white cursor-crosshair w-full max-w-[400px] mb-4"
         style={{ touchAction: "none" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -103,66 +103,66 @@ const DrawingCanvas: React.FC<{
       />
 
       {/* Color palette */}
-      <div className="flex gap-2 mt-3 flex-wrap justify-center">
+      <div className="flex gap-2 mb-4 flex-wrap justify-center">
         {COLORS.map((c) => (
           <button
             key={c}
             onClick={() => { setColor(c); setIsEraser(false); }}
-            className={`w-8 h-8 rounded-full border-2 transition-transform ${
-              color === c && !isEraser ? "border-indigo-500 scale-110" : "border-gray-300"
+            className={`w-10 h-10 border-4 transition-transform ${
+              color === c && !isEraser ? "border-text-primary scale-110" : "border-transparent hover:border-gray-300"
             }`}
-            style={{ backgroundColor: c }}
+            style={{ backgroundColor: c, borderRadius: 0 }}
             aria-label={`Color ${c}`}
           />
         ))}
       </div>
 
       {/* Tools row */}
-      <div className="flex gap-3 mt-3 items-center flex-wrap justify-center">
+      <div className="flex gap-4 mb-6 items-center flex-wrap justify-center">
         {/* Brush sizes */}
         {BRUSH_SIZES.map((b) => (
           <button
             key={b.label}
             onClick={() => setBrushSize(b.size)}
-            className={`px-3 py-1 rounded text-sm font-bold transition-colors ${
+            className={`px-4 py-2 text-lg font-black uppercase border-4 border-text-primary transition-colors ${
               brushSize === b.size
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-text-primary text-background-light"
+                : "bg-background-light text-text-primary hover:bg-gray-200"
             }`}
           >
             {b.label}
           </button>
         ))}
 
-        <div className="w-px h-6 bg-gray-300" />
+        <div className="w-1 h-8 bg-text-primary" />
 
         {/* Eraser */}
         <button
           onClick={() => setIsEraser(!isEraser)}
-          className={`px-3 py-1 rounded text-sm font-bold transition-colors ${
+          className={`px-4 py-2 text-lg font-black uppercase border-4 border-text-primary transition-colors ${
             isEraser
-              ? "bg-pink-500 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-text-primary text-background-light"
+              : "bg-background-light text-text-primary hover:bg-gray-200"
           }`}
         >
-          Eraser
+          ERASER
         </button>
 
         {/* Clear */}
         <button
           onClick={handleClear}
-          className="px-3 py-1 rounded text-sm font-bold bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+          className="px-4 py-2 text-lg font-black uppercase border-4 border-text-primary bg-primary text-background-light hover:bg-primary-dark transition-colors"
         >
-          Clear
+          CLEAR
         </button>
       </div>
 
       {/* Submit */}
       <button
         onClick={handleSubmit}
-        className="mt-4 bg-secondary hover:bg-secondary-dark text-white font-bold py-2 px-6 rounded transition duration-300 ease-in-out"
+        className="w-full max-w-[400px] bg-secondary text-background-light py-4 px-6 bauhaus-button text-xl hover:bg-secondary-dark"
       >
-        Submit Drawing
+        SUBMIT DRAWING
       </button>
     </div>
   );

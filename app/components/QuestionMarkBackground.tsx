@@ -101,7 +101,7 @@ export function QuestionMarkBackground() {
 
   return (
     <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -1 }}>
-      <Canvas camera={{ position: [0, 0, 30], fov: 60 }} style={{ background: "#1a1a1a" }}>
+      <Canvas camera={{ position: [0, 0, 30], fov: 60 }} style={{ background: "var(--color-background-light)" }}>
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} intensity={0.5} />
         <StarField />

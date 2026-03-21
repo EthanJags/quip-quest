@@ -41,26 +41,26 @@ const Score: React.FC<{
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-full p-6 bg-gradient-to-b from-indigo-100 to-indigo-200">
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center text-indigo-700 mb-6">Scores</h1>
+    <div className="flex flex-col items-center justify-center min-h-full p-6 font-sans">
+      <div className="w-full max-w-2xl bg-background-light bauhaus-border p-8">
+        <h1 className="text-5xl font-black text-center text-text-primary mb-8 uppercase tracking-widest border-b-4 border-text-primary pb-4">Scores</h1>
         <Leaderboard players={players} />
-        <div className="mt-8 text-center">
-          <p className="text-lg text-gray-600">
-            Next round starting in <span className="font-bold text-indigo-600">{timeLeft}</span> seconds
+        <div className="mt-12 text-center">
+          <p className="text-2xl font-bold text-text-primary uppercase">
+            Next round starting in <span className="font-black text-primary">{timeLeft}</span> seconds
           </p>
-          <div className="mt-4 w-full bg-gray-200 rounded-full h-2.5">
+          <div className="mt-6 w-full bg-background-light bauhaus-border h-8 relative">
             <div
-              className="bg-indigo-600 h-2.5 rounded-full transition-all duration-1000 ease-linear"
+              className="bg-primary h-full transition-all duration-1000 ease-linear"
               style={{ width: `${(timeLeft / 10) * 100}%` }}
             ></div>
           </div>
           {player.isHost && (
             <button
-              className="mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+              className="mt-8 w-full bg-secondary text-background-light py-4 px-6 bauhaus-button text-xl hover:bg-secondary-dark uppercase"
               onClick={handleStartRound()}
             >
-              Start Next Round
+              START NEXT ROUND
             </button>
           )}
         </div>

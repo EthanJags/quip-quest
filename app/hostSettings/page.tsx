@@ -66,15 +66,19 @@ export default function HostSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-primary-dark text-center">Welcome, {player.name}!</h1>
-        <h2 className="text-xl font-semibold mb-4 text-gray-700">Game Settings</h2>
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4 font-sans">
+      <div className="bauhaus-card bg-background-light p-8 w-full max-w-md">
+        <h1 className="text-3xl font-black mb-6 text-text-primary text-center uppercase border-b-4 border-text-primary pb-2">
+          Host Settings
+        </h1>
+        <h2 className="text-xl font-bold mb-6 text-text-primary uppercase text-center">
+          Welcome, {player.name}!
+        </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {Object.entries(gameSettings).map(([key, value]) => (
             <div key={key} className="flex flex-col">
-              <label htmlFor={key} className="mb-2 text-sm font-medium text-gray-600">
+              <label htmlFor={key} className="mb-2 text-sm font-black text-text-primary uppercase tracking-wide">
                 {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1")}:
               </label>
               <select
@@ -86,7 +90,7 @@ export default function HostSettings() {
                     key === "promptDeck" ? e.target.value : Number(e.target.value),
                   )
                 }
-                className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-gray-800"
+                className="w-full px-4 py-3 bauhaus-input text-lg font-bold uppercase cursor-pointer"
               >
                 {settingOptions[key as keyof typeof settingOptions].map((option) => (
                   <option key={option} value={option}>
@@ -98,16 +102,21 @@ export default function HostSettings() {
           ))}
         </div>
 
-        {!loadingCreateGame ? <button
-          onClick={handleStartClick}
-          className="w-full mt-6 bg-secondary hover:bg-secondary-dark text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-        >
-          Create Game
-        </button> : <button
-          className="w-full mt-6 bg-primary text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+        {!loadingCreateGame ? (
+          <button
+            onClick={handleStartClick}
+            className="w-full mt-8 bg-primary text-background-light py-4 px-6 bauhaus-button text-xl hover:bg-primary-dark"
           >
-          Creating Game...
-          </button>}
+            CREATE GAME
+          </button>
+        ) : (
+          <button
+            disabled
+            className="w-full mt-8 bg-gray-400 text-background-light py-4 px-6 bauhaus-button text-xl cursor-not-allowed"
+          >
+            CREATING GAME...
+          </button>
+        )}
       </div>
     </div>
   );

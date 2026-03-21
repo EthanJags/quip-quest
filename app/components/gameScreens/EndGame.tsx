@@ -7,11 +7,14 @@ const EndGame: React.FC = () => {
   const game = useAppSelector((state) => state.game);
 
   return (
-    <div className="end-game-container">
-      <h1 className="text-black">Game Over</h1>
-      <p className="text-black">Thanks for playing!</p>
-      <Leaderboard players={game.players} />
-      {/* add play again functionality that links to the waiting room */}
+    <div className="flex flex-col items-center justify-center p-6 font-sans">
+      <div className="w-full max-w-2xl bg-background-light bauhaus-border p-8 text-center">
+        <h1 className="text-6xl font-black text-text-primary mb-4 uppercase tracking-widest">Game Over</h1>
+        <p className="text-2xl font-bold text-text-primary mb-8 uppercase">Thanks for playing!</p>
+        <div className="text-left">
+          <Leaderboard players={game.players} />
+        </div>
+      </div>
     </div>
   );
 };

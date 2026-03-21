@@ -115,47 +115,51 @@ export default function WaitingRoom() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-light to-primary-dark flex flex-col items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-6 text-primary-dark text-center">Waiting Room</h1>
-        <div className="mb-6 text-center">
-          <p className="text-lg font-semibold text-gray-700">Game Code:</p>
-          <div className="relative inline-block cursor-pointer group" onClick={handleCopyGameCode}>
-            <p className="text-4xl font-bold text-primary transition-colors duration-300 group-hover:text-primary-dark">
-              {game.code}
-            </p>
-            <span
-              className={`absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 transition-opacity duration-300 ${codeCopied ? "opacity-75" : ""}`}
-            >
-              Copied!
-            </span>
-            <p className="text-xs text-gray-500 mt-1">Click to copy</p>
-          </div>
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4 font-sans">
+      <div className="bauhaus-card bg-accent p-8 w-full max-w-md">
+        <h1 className="text-4xl font-black mb-8 text-text-primary text-center uppercase tracking-wider border-b-4 border-text-primary pb-4">
+          Waiting Room
+        </h1>
+        <div className="mb-8 text-center bg-background-light bauhaus-border p-4 relative cursor-pointer group" onClick={handleCopyGameCode}>
+          <p className="text-xl font-bold text-text-primary uppercase mb-2">Game Code:</p>
+          <p className="text-5xl font-black text-primary tracking-widest">
+            {game.code}
+          </p>
+          <span
+            className={`absolute -top-10 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-text-primary text-background-light font-bold uppercase text-sm transition-opacity duration-300 ${codeCopied ? "opacity-100" : "opacity-0"}`}
+          >
+            COPIED!
+          </span>
+          <p className="text-sm text-text-primary font-bold mt-2 uppercase">Click to copy</p>
         </div>
-        <h2 className="text-xl font-semibold mb-4 text-gray-700 text-center">Welcome, {player.name}!</h2>
+        <h2 className="text-2xl font-bold mb-6 text-text-primary text-center uppercase">
+          Welcome, {player.name}!
+        </h2>
 
-        <div className="mb-6">
+        <div className="mb-8 bg-background-light bauhaus-border p-4">
           <PlayersList />
         </div>
 
         {player.isHost ? (
           <button
             onClick={handleStartClick}
-            className="w-full bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out mb-4"
+            className="w-full bg-secondary text-background-light py-4 px-6 bauhaus-button text-xl mb-6 hover:bg-secondary-dark"
           >
-            Start Game
+            START GAME
           </button>
         ) : (
-          <p className="text-sm text-gray-600 italic text-center mb-4">Tell the host if you are ready to start</p>
+          <p className="text-lg text-text-primary font-bold text-center mb-6 uppercase bg-background-light bauhaus-border p-4">
+            Waiting for host to start...
+          </p>
         )}
 
         <button
           onClick={handleShareLink}
-          className={`w-full font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out ${
-            linkCopied ? "bg-green-500 hover:bg-green-600 text-white" : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+          className={`w-full py-4 px-6 bauhaus-button text-xl uppercase ${
+            linkCopied ? "bg-primary text-background-light" : "bg-background-light text-text-primary hover:bg-gray-200"
           }`}
         >
-          {linkCopied ? "Link Copied!" : "Share Link"}
+          {linkCopied ? "LINK COPIED!" : "SHARE LINK"}
         </button>
       </div>
     </div>

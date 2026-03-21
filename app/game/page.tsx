@@ -142,50 +142,54 @@ export default function Game() {
   };
 
   return (
-    <div className="min-h-screen bg-indigo-600 p-4">
+    <div className="min-h-screen bg-background-light p-4 font-sans">
       {/* Game Info Header */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bauhaus-card bg-background-light p-4 mb-8">
         <div className="flex justify-between items-center">
-          <div>
-            <p className="font-bold text-lg text-indigo-700">{player.name}</p>
-            <p className="font-bold text-sm text-gray-600">Score: {player.score}</p>
+          <div className="border-4 border-text-primary p-2 bg-accent">
+            <p className="font-black text-xl text-text-primary uppercase">{player.name}</p>
+            <p className="font-bold text-lg text-text-primary uppercase">Score: {player.score}</p>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Round</p>
-            <p className="text-2xl font-bold text-indigo-700">
+          <div className="text-right border-4 border-text-primary p-2 bg-background-light">
+            <p className="text-sm text-text-primary font-bold uppercase">Round</p>
+            <p className="text-3xl font-black text-text-primary">
               {game.currentRound} / {game.gameSettings.rounds}
             </p>
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-6">
           <TimerBar timeRemaining={timeRemaining} />
         </div>
       </div>
 
       {/* Game Content */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bauhaus-card bg-background-light p-8">
         {renderGameContent()}
-        <div>{error}</div>
-        <div className="mt-6 flex justify-center">
+        {error && <div className="mt-4 text-primary font-bold uppercase text-center">{error}</div>}
+        <div className="mt-8 flex justify-center">
           <button
             onClick={handleLeaveGame}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+            className="bg-primary text-background-light py-3 px-6 bauhaus-button text-lg hover:bg-primary-dark"
           >
-            {isHost ? "End Game" : "Leave Game"}
+            {isHost ? "END GAME" : "LEAVE GAME"}
           </button>
         </div>
       </div>
-      <button onClick={toggleShowPlayerInfo}>Player Info</button>
+      <div className="mt-8 flex justify-center">
+        <button onClick={toggleShowPlayerInfo} className="bg-secondary text-background-light py-3 px-6 bauhaus-button text-lg">
+          PLAYER INFO
+        </button>
+      </div>
 
       {showPlayerInfo && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-md p-6 max-w-md w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50 p-4">
+          <div className="bauhaus-card bg-background-light p-8 max-w-md w-full">
             <PlayerInfo players={game.players} socket={getSocket()!} currentPlayerId={playerId} />
             <button
               onClick={toggleShowPlayerInfo}
-              className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+              className="w-full mt-6 bg-text-primary text-background-light py-3 px-4 bauhaus-button text-lg"
             >
-              Close
+              CLOSE
             </button>
           </div>
         </div>

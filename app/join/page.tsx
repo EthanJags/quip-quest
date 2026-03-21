@@ -70,10 +70,12 @@ export default function Join() {
   }
 
   return (
-    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-primary-dark text-center">Welcome, {player.name}!</h1>
-        <div className="space-y-4">
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4 font-sans">
+      <div className="bauhaus-card bg-background-light p-8 w-full max-w-md">
+        <h1 className="text-3xl font-black mb-8 text-text-primary text-center uppercase tracking-widest border-b-4 border-text-primary pb-2">
+          Welcome, {player.name}!
+        </h1>
+        <div className="space-y-6">
           <input
             type="text"
             inputMode="numeric"
@@ -81,23 +83,23 @@ export default function Join() {
             id="codeInput"
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Enter your code here"
+            placeholder="ENTER GAME CODE"
             disabled={isSubmitting}
-            className="w-full px-4 py-2 border border-background-dark rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-text-primary placeholder-text-placeholder appearance-none"
+            className="w-full px-4 py-3 bauhaus-input text-lg placeholder-text-placeholder uppercase"
           />
           <button
             onClick={handleSubmit}
-            className={`w-full py-2 px-4 rounded-md text-white transition duration-300 ${
+            className={`w-full py-4 px-6 bauhaus-button text-xl uppercase ${
               isSubmitting || code.length === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-secondary hover:bg-secondary-dark"
+                ? "bg-gray-400 text-text-primary cursor-not-allowed"
+                : "bg-secondary text-background-light hover:bg-secondary-dark"
             }`}
             disabled={isSubmitting || code.length === 0}
           >
-            {isSubmitting ? "Joining..." : "Join Game"}
+            {isSubmitting ? "JOINING..." : "JOIN GAME"}
           </button>
         </div>
-        {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+        {error && <p className="mt-6 text-primary font-bold text-center uppercase">{error}</p>}
       </div>
     </div>
   );
