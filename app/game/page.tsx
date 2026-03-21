@@ -23,7 +23,6 @@ import PlayerInfo from "../components/PlayerInfo";
 
 export default function Game() {
   const router = useRouter();
-  const socket = getSocket();
   const player = useAppSelector((state) => state.player);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -99,17 +98,15 @@ export default function Game() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [timerActive, timeRemaining, socket, game.code]);
+  }, [timerActive, timeRemaining, game.code]);
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
-  if (!socket) {
-    return <div className="flex justify-center items-center h-screen">Socket is undefined</div>;
-  }
-
   const handleLeaveGame = () => {
+    const socket = getSocket();
+    if (!socket) return;
     if (window.confirm(`Are you sure you want to ${isHost ? "end" : "leave"} the game?`)) {
       socket.emit("leaveGame", { playerId: player.id });
       dispatch(resetGame());
@@ -118,6 +115,8 @@ export default function Game() {
   };
 
   const renderGameContent = () => {
+    const socket = getSocket();
+    if (!socket) return <div>Connecting...</div>;
     switch (currentStage) {
       case "Answering":
         return <Answering socket={socket} />;
@@ -181,7 +180,7 @@ export default function Game() {
       {showPlayerInfo && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-md p-6 max-w-md w-full">
-            <PlayerInfo players={game.players} socket={socket} currentPlayerId={playerId} />
+            <PlayerInfo players={game.players} socket={getSocket()!} currentPlayerId={playerId} />
             <button
               onClick={toggleShowPlayerInfo}
               className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out"

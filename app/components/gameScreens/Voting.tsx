@@ -34,16 +34,15 @@ const Voting: React.FC<{
           : "bg-gray-100 hover:bg-gray-200"
       }`}
     >
-      {answer.text}
+      <img src={answer.drawing} alt="Drawing" className="w-full rounded" />
     </button>
   ));
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h1 className="text-3xl font-bold mb-6 text-indigo-700">Vote for an Answer</h1>
+      <h1 className="text-3xl font-bold mb-6 text-indigo-700">Vote for a Drawing</h1>
       <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl w-full mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Question:</h2>
-        <p className="text-lg text-gray-700 mb-6">{question}</p>
+        <p className="text-lg text-gray-700 mb-6">Prompt: {question}</p>
         <div className="space-y-2">
           {answerOptions.length > 0 ? (
             answerOptions

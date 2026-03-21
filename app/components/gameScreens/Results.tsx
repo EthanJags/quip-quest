@@ -53,7 +53,7 @@ const Results: React.FC<{
       <div className="space-y-6">
         {Object.entries(latestAnswers).map(([playerId, answer]) => (
           <div key={`${playerId}`} className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-indigo-600 mb-2">Answer: {answer.text}</h3>
+            <img src={answer.drawing} alt="Drawing" className="w-full max-w-sm rounded-lg border mb-2" />
             <p className="text-gray-600 mb-2">Submitted by: {getPlayerName(answer.submittedBy)}</p>
             <p className="text-gray-600 mb-2">Votes: {answer.votes.length}</p>
             {answer.votes.length > 0 && (

@@ -14,7 +14,6 @@ import { setGame, addPlayer, setCurrentQuestion } from "../store/slices/gameSlic
 
 export default function WaitingRoom() {
   const router = useRouter();
-  const socket = getSocket();
   const player = useSelector((state: RootState) => state.player);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -84,6 +83,7 @@ export default function WaitingRoom() {
   }
 
   const handleStartClick = () => {
+    const socket = getSocket();
     if (!socket) return;
     socket.emit("startGame");
   };

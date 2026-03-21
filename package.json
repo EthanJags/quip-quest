@@ -43,12 +43,15 @@
     "@types/react-dom": "^19.2.3",
     "@types/redux-logger": "^3.0.13",
     "@types/uuid": "^11.0.0",
-    "eslint": "^10.1.0",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.1",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   },
   "prettier": {
     "printWidth": 120

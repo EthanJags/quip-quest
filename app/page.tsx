@@ -19,11 +19,11 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
-  const socket = getSocket();
   const socketID = useAppSelector((state) => state.socket.id);
   const player = useAppSelector((state) => state.player);
   const [showRules, setShowRules] = useState<boolean>(false);
   const language = useAppSelector((state) => state.language);
+  const socket = socketID ? getSocket() : null;
 
   const toggleRules = () => setShowRules(!showRules);
 

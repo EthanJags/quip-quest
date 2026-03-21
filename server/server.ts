@@ -340,7 +340,7 @@ function getSocketIdFromPlayerId(playerId: ID) {
       console.log("submit answer: ", data.answer);
       console.log("current player id: ", data.currentPlayerId);
       const playerId = data.currentPlayerId;
-      const answer = { text: data.answer, submittedBy: playerId, votes: [] };
+      const answer = { drawing: data.answer, submittedBy: playerId, votes: [] };
       console.log(answer);
       const gameRoom: number = getRoom(socket);
       const game = games[gameRoom];

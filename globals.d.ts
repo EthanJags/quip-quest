@@ -25,7 +25,7 @@ declare interface GameSettings {
 }
 
 declare interface Answer {
-  text: string;
+  drawing: string;
   submittedBy: ID;
   votes: ID[];
 }

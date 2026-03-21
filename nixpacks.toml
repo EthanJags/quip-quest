@@ -1,0 +1,8 @@
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["echo 'skipping frontend build'"]
+
+[start]
+cmd = "npx tsx server/server.ts"

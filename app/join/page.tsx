@@ -9,7 +9,6 @@ import { resetGame, setGame } from "../store/slices/gameSlice";
 export default function Join() {
   const router = useRouter();
   const player = useAppSelector((state) => state.player);
-  const socket = getSocket();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [code, setCode] = useState("");
@@ -29,6 +28,7 @@ export default function Join() {
       router.push("/");
     }
 
+    const socket = getSocket();
     if (socket) {
       const handleValidCode = (game: Game) => {
         setIsSubmitting(false);
@@ -53,9 +53,10 @@ export default function Join() {
         socket.off("invalidCode", handleInvalidCode);
       };
     }
-  }, [player.name, socket, dispatch, router, socketID]);
+  }, [player.name, dispatch, router, socketID]);
 
   const handleSubmit = () => {
+    const socket = getSocket();
     if (!socket) return;
     setError("");
     setIsSubmitting(true);

@@ -8,7 +8,6 @@ import { setGame, addPlayer, resetGame } from "../store/slices/gameSlice";
 
 export default function HostSettings() {
   const router = useRouter();
-  const socket = getSocket();
   const player = useAppSelector((state) => state.player);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingCreateGame, setLoadingCreateGame] = useState(false);
@@ -48,6 +47,7 @@ export default function HostSettings() {
   }
 
   const handleStartClick = () => {
+    const socket = getSocket();
     if (!socket) return;
     socket.emit("createGame", gameSettings, player);
     dispatch(resetGame());
