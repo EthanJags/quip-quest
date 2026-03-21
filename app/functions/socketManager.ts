@@ -7,7 +7,7 @@ let socket: Socket | null = null;
 export const initSocket = (persistedId: string | null, playerId: string) => {
   console.log("initSocket called", persistedId);
   if (!socket) {
-    const socketUrl = "wss://quipquestcli-53f759c18f0f.herokuapp.com/";
+    const socketUrl = process.env.NEXT_PUBLIC_BACKEND_SOCKET_URL || "ws://localhost:2999";
     console.log("socketUrl: ", socketUrl);
     socket = io(socketUrl, {
       query: persistedId ? { id: persistedId } : undefined,

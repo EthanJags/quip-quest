@@ -1,69 +1,81 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --background: 255, 255, 255;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-text-primary: 31, 41, 55; /* Very dark gray (almost black) */
-  
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 
-  --color-foreground: 0, 0, 0; /* Black */
-  --color-background-start: 214, 219, 220; /* Very light gray */
-  --color-background-end: 255, 255, 255; /* White */
+  --color-primary-light: rgba(var(--color-primary-light-rgb), 1);
+  --color-primary: rgba(var(--color-primary-rgb), 1);
+  --color-primary-dark: rgba(var(--color-primary-dark-rgb), 1);
 
-  --color-primary-light: 79, 70, 229; /* Bright indigo */
-  --color-primary: 67, 56, 202; /* Indigo */
-  --color-primary-dark: 55, 48, 163; /* Dark indigo */
+  --color-secondary-light: rgba(var(--color-secondary-light-rgb), 1);
+  --color-secondary: rgba(var(--color-secondary-rgb), 1);
+  --color-secondary-dark: rgba(var(--color-secondary-dark-rgb), 1);
 
-  --color-secondary-light: 16, 185, 129; /* Bright teal */
-  --color-secondary: 5, 150, 105; /* Teal */
-  --color-secondary-dark: 4, 120, 87; /* Dark teal */
+  --color-background-light: rgba(var(--color-background-light-rgb), 1);
+  --color-background: rgba(var(--color-background-rgb), 1);
+  --color-background-dark: rgba(var(--color-background-dark-rgb), 1);
 
-  --color-background: 255, 255, 255; /* white */
-  --color-background-dark: 209, 213, 219; /* Medium light gray */
+  --color-text-primary: rgba(var(--color-text-primary-rgb), 1);
+  --color-text-placeholder: rgba(var(--color-text-placeholder-rgb), 1);
 
-  --color-text-primary: 31, 41, 55; /* Very dark gray (almost black) */
-  --color-text-placeholder: 156, 163, 175; /* Medium gray */
+  --color-foreground: rgba(var(--color-foreground-rgb), 1);
+  --color-background-start: rgba(var(--color-background-start-rgb), 1);
+  --color-background-end: rgba(var(--color-background-end-rgb), 1);
 }
 
+:root {
+  --color-background-rgb: 255, 255, 255;
 
-  .dark {
-    --background: 18, 18, 18;
-    --low-button-background: 10, 10, 10;
+  --color-text-primary-rgb: 31, 41, 55;
 
-  --color-text-primary: 255, 255, 255; /* white */
+  --color-foreground-rgb: 0, 0, 0;
+  --color-background-start-rgb: 214, 219, 220;
+  --color-background-end-rgb: 255, 255, 255;
 
+  --color-primary-light-rgb: 79, 70, 229;
+  --color-primary-rgb: 67, 56, 202;
+  --color-primary-dark-rgb: 55, 48, 163;
 
-    --color-foreground: 255, 255, 255; /* White */
-    --color-background-start: 0, 0, 0; /* Black */
-    --color-background-end: 0, 0, 0; /* Black */
+  --color-secondary-light-rgb: 16, 185, 129;
+  --color-secondary-rgb: 5, 150, 105;
+  --color-secondary-dark-rgb: 4, 120, 87;
 
-    --color-primary-light: 55, 48, 163; /* Dark indigo */
-    --color-primary: 188, 168, 248; /* Indigo */
-    --color-primary-dark: 79, 70, 229; /* Bright indigo */
+  --color-background-light-rgb: 255, 255, 255;
+  --color-background-dark-rgb: 209, 213, 219;
 
-    --color-secondary-light: 4, 120, 87; /* Dark teal */
-    --color-secondary: 5, 150, 105; /* Teal */
-    --color-secondary-dark: 16, 185, 129; /* Bright teal */
+  --color-text-placeholder-rgb: 156, 163, 175;
+}
 
-    --color-background: 18, 18, 18; /* Almost black */
-    --color-background-dark: 57, 59, 65; /* Black */
+.dark {
+  --color-background-rgb: 18, 18, 18;
 
+  --color-text-primary-rgb: 249, 250, 251;
 
-    --color-text-primary: 249, 250, 251; /* Very light gray (almost white) */
-    --color-text-placeholder: 107, 114, 128; /* Medium gray */
-  }
+  --color-foreground-rgb: 255, 255, 255;
+  --color-background-start-rgb: 0, 0, 0;
+  --color-background-end-rgb: 0, 0, 0;
 
+  --color-primary-light-rgb: 55, 48, 163;
+  --color-primary-rgb: 188, 168, 248;
+  --color-primary-dark-rgb: 79, 70, 229;
 
+  --color-secondary-light-rgb: 4, 120, 87;
+  --color-secondary-rgb: 5, 150, 105;
+  --color-secondary-dark-rgb: 16, 185, 129;
+
+  --color-background-light-rgb: 18, 18, 18;
+  --color-background-dark-rgb: 57, 59, 65;
+
+  --color-text-placeholder-rgb: 107, 114, 128;
+}
 
 body {
-  color: rgb(var(--color-foreground));
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--color-background-end))
-  ) rgb(var(--color-background-start));
+  color: rgb(var(--color-foreground-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--color-background-end-rgb)))
+    rgb(var(--color-background-start-rgb));
 }
 
 .text-balance {
