@@ -18,6 +18,13 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Sketchy Business",
   description: "Where bad art wins big.",
+  openGraph: {
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
