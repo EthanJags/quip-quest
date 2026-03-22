@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Socket } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "@/app/store/constants/reduxTypes";
@@ -8,37 +10,40 @@ const AwaitingResponses: React.FC<{
   socket: Socket;
 }> = ({ socket }) => {
   const dispatch = useAppDispatch();
-  const question = useAppSelector((state) => state.game.currentQuestion);
+  const prompt = useAppSelector((state) => state.game.currentPrompt);
   const [answersRecieved, setAnswersRecieved] = useState(0);
   const totalPlayers = useAppSelector((state) => state.game.players.length);
 
   useSocketEvent(socket, "answerRecieved", (data: { playerId: string; totalAnswers: number }) => {
-    const { playerId, totalAnswers } = data;
-    console.log("totalAnswers: ", totalAnswers);
+    const { totalAnswers } = data;
     setAnswersRecieved(totalAnswers);
   });
 
   useSocketEvent(socket, "allPlayersAnswered", (randomizedAnswers: Game["latestAnswers"]) => {
-    console.log("randomizedAnswers: ", randomizedAnswers);
     dispatch(setAnswers(randomizedAnswers));
     dispatch(setCurrentStage("Voting"));
   });
 
-  if (!socket) return <div className="text-center text-red-500 font-bold">Socket is undefined</div>;
+  if (!socket) return <div className="text-primary font-bold text-center">Socket is undefined</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <h1 className="text-3xl font-bold mb-6 text-indigo-700">Answer Submitted</h1>
-      <div className="bg-gray-100 p-6 rounded-lg shadow-md max-w-md w-full">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Question:</h2>
-        <p className="text-lg text-gray-700">{question}</p>
+    <div className="flex flex-col items-center justify-center py-8">
+      <h1 className="heading-display text-3xl text-gray-800 mb-6" style={{ fontStyle: "italic" }}>Answer Submitted</h1>
+
+      <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50 px-5 py-4 w-full max-w-md mb-8">
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">Prompt</p>
+        <p className="text-lg text-gray-800">{prompt}</p>
       </div>
-      <div className="mt-8 text-center">
-        <p className="text-lg text-gray-600">Waiting for other players to answer...</p>
-        <h2 className="text-black">
+
+      <div className="text-center">
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-3">Waiting for other players</p>
+        <p className="font-mono text-5xl font-bold text-gray-800 anim-count-pulse">
           {answersRecieved} / {totalPlayers}
-        </h2>
-        <div className="mt-4 animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+        </p>
+
+        <div className="mt-8 flex justify-center">
+          <div className="w-10 h-10 rounded-full border-2 border-gray-300 border-t-gray-800 animate-spin" />
+        </div>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Socket } from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "@/app/store/constants/reduxTypes";
@@ -8,7 +10,7 @@ const AwaitingVotes: React.FC<{
   socket: Socket;
 }> = ({ socket }) => {
   const dispatch = useAppDispatch();
-  const question = useAppSelector((state) => state.game.currentQuestion);
+  const prompt = useAppSelector((state) => state.game.currentPrompt);
   const [votesReceived, setVotesReceived] = useState(0);
   const totalPlayers = useAppSelector((state) => state.game.players.length);
 
@@ -27,31 +29,36 @@ const AwaitingVotes: React.FC<{
     },
   );
 
-  if (!socket) return <div className="text-center text-red-500 font-bold">Socket is undefined</div>;
+  if (!socket) return <div className="text-primary font-bold text-center">Socket is undefined</div>;
+
+  const progress = totalPlayers > 0 ? (votesReceived / totalPlayers) * 100 : 0;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <h1 className="text-3xl font-bold mb-6 text-indigo-700">Waiting for Votes</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md max-w-md w-full mb-8">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Question:</h2>
-        <p className="text-lg text-gray-700">{question}</p>
+    <div className="flex flex-col items-center justify-center py-8">
+      <h1 className="heading-display text-3xl text-gray-800 mb-6" style={{ fontStyle: "italic" }}>Waiting for Votes</h1>
+
+      <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50 px-5 py-4 w-full max-w-md mb-8">
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">Prompt</p>
+        <p className="text-lg text-gray-800">{prompt}</p>
       </div>
-      <div className="text-center">
-        <p className="text-xl mb-4 text-gray-600">
-          Votes received: <span className="font-bold text-indigo-600">{votesReceived}</span> / {totalPlayers}
+
+      <div className="text-center w-full max-w-md">
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-3">Votes received</p>
+        <p className="font-mono text-5xl font-bold text-gray-800 mb-6 anim-count-pulse">
+          {votesReceived} / {totalPlayers}
         </p>
-        <div className="relative pt-1">
-          <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
-            <div
-              style={{ width: `${(votesReceived / totalPlayers) * 100}%` }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500 transition-all duration-500 ease-in-out"
-            ></div>
-          </div>
+
+        <div className="h-2 bg-white/40 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-gray-800 rounded-full transition-all duration-300"
+            style={{ width: `${progress}%` }}
+          />
         </div>
-        <div className="mt-6 text-gray-600">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mr-2"></div>
-          Waiting for all votes...
+
+        <div className="mt-8 flex justify-center">
+          <div className="w-10 h-10 rounded-full border-2 border-gray-300 border-t-gray-800 animate-spin" />
         </div>
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mt-4">Waiting for all votes</p>
       </div>
     </div>
   );

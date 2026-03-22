@@ -1,6 +1,9 @@
-import React, { use } from "react";
+"use client";
+
+import React from "react";
 import { Socket } from "socket.io-client";
 import { useAppSelector } from "../store/constants/reduxTypes";
+import PlayerBalloon from "./PlayerBalloon";
 
 interface PlayerInfoProps {
   players: Game["players"];
@@ -9,7 +12,6 @@ interface PlayerInfoProps {
 }
 
 const PlayerInfo: React.FC<PlayerInfoProps> = ({ players, socket, currentPlayerId }) => {
-  // Sort players by score in descending order
   const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
   const currentPlayer = useAppSelector((state) => state.player);
 
@@ -18,32 +20,29 @@ const PlayerInfo: React.FC<PlayerInfoProps> = ({ players, socket, currentPlayerI
   };
 
   return (
-    <div className="bg-background rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-primary mb-4">Players</h2>
-      <ul className="space-y-2">
-        {sortedPlayers.map((player) => (
-          <li
-            key={player.id}
-            className="flex items-center justify-between p-3 rounded-lg bg-background-light mode-dark:bg-background-dark"
-          >
-            <div className="flex items-center">
-              <span className="font-semibold text-text">{player.name}</span>
-              {player.isHost && <span className="ml-2 text-sm text-secondary">(Host)</span>}
-            </div>
-            <div className="flex items-center">
-              <span className="font-bold text-primary mr-4">{player.score}</span>
-              {currentPlayer.isHost && currentPlayer.id !== player.id && (
-                <button
-                  onClick={() => handleKickPlayer(player.id)}
-                  className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded text-sm transition duration-300"
-                >
-                  Kick
-                </button>
-              )}
-            </div>
-          </li>
+    <div>
+      <h2 className="heading-display text-2xl text-gray-800 mb-6" style={{ fontStyle: "italic" }}>Players</h2>
+      <div className="flex flex-wrap justify-center gap-3">
+        {sortedPlayers.map((player, index) => (
+          <div key={player.id} className="flex flex-col items-center">
+            <PlayerBalloon
+              player={player}
+              size="md"
+              showScore
+              showHost
+              animationDelay={`${index * 0.2}s`}
+            />
+            {currentPlayer.isHost && currentPlayer.id !== player.id && (
+              <button
+                onClick={() => handleKickPlayer(player.id)}
+                className="h-7 px-3 rounded-full text-[10px] font-medium border border-red-300 text-red-500 hover:bg-red-500 hover:text-white transition-all active:scale-[0.97] cursor-pointer mt-1"
+              >
+                Kick
+              </button>
+            )}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

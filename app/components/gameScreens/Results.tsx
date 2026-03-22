@@ -1,13 +1,16 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 import { useAppSelector, useAppDispatch } from "@/app/store/constants/reduxTypes";
 import { setCurrentStage } from "@/app/store/slices/gameSlice";
+import { Avatar } from "@/app/components/avatars";
 
 const Results: React.FC<{
   socket: Socket;
 }> = ({ socket }) => {
   const dispatch = useAppDispatch();
-  const question = useAppSelector((state) => state.game.currentQuestion);
+  const prompt = useAppSelector((state) => state.game.currentPrompt);
   const latestAnswers = useAppSelector((state) => state.game.latestAnswers);
   const players = useAppSelector((state) => state.game.players);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -29,8 +32,12 @@ const Results: React.FC<{
     return () => clearInterval(timer);
   }, [dispatch]);
 
+  const getPlayer = (playerId: string) => {
+    return players.find((p) => p.id === playerId);
+  };
+
   const getPlayerName = (playerId: string) => {
-    const player = players.find((p) => p.id === playerId);
+    const player = getPlayer(playerId);
     return player ? player.name : "Unknown Player";
   };
 
@@ -43,27 +50,46 @@ const Results: React.FC<{
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-indigo-700 mb-6 text-center">Results</h1>
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-2">Question:</h2>
-        <p className="text-lg text-gray-700">{question}</p>
+    <div className="max-w-2xl mx-auto">
+      <h1 className="heading-display text-3xl text-gray-800 mb-6 text-center" style={{ fontStyle: "italic" }}>Results</h1>
+
+      <div className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50 px-5 py-4 mb-6">
+        <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">Prompt</p>
+        <p className="text-lg text-gray-800">{prompt}</p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-3">
         {Object.entries(latestAnswers).map(([playerId, answer]) => (
-          <div key={`${playerId}`} className="bg-white rounded-lg shadow-md p-6">
-            <img src={answer.drawing} alt="Drawing" className="w-full max-w-sm rounded-lg border mb-2" />
-            <p className="text-gray-600 mb-2">Submitted by: {getPlayerName(answer.submittedBy)}</p>
-            <p className="text-gray-600 mb-2">Votes: {answer.votes.length}</p>
+          <div key={playerId} className="bg-white/60 backdrop-blur-sm rounded-2xl border border-white/50 px-5 py-4">
+            <img src={answer.drawing} alt="Drawing" className="w-full max-w-sm rounded-lg border border-gray-200/60 mb-4" />
+
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center gap-2">
+                {getPlayer(answer.submittedBy)?.avatar && (
+                  <Avatar avatarId={getPlayer(answer.submittedBy)!.avatar} size={24} />
+                )}
+                <p className="text-xs font-medium tracking-widest uppercase text-gray-400">
+                  {getPlayerName(answer.submittedBy)}
+                </p>
+              </div>
+              <span className="bg-gray-900 text-white px-3 py-1 rounded-full text-xs font-bold">
+                {answer.votes.length} {answer.votes.length === 1 ? "vote" : "votes"}
+              </span>
+            </div>
+
             {answer.votes.length > 0 && (
-              <div className="mt-4">
-                <h4 className="font-semibold text-gray-700 mb-2">Voted by:</h4>
-                <ul className="list-disc list-inside text-gray-600">
+              <div className="mt-3 pt-3 border-t border-gray-200/60">
+                <p className="text-xs font-medium tracking-widest uppercase text-gray-400 mb-2">Voted by</p>
+                <div className="flex flex-wrap gap-1.5">
                   {answer.votes.map((voterId) => (
-                    <li key={voterId}>{getPlayerName(voterId)}</li>
+                    <span key={voterId} className="bg-white/70 text-gray-800 px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1.5">
+                      {getPlayer(voterId)?.avatar && (
+                        <Avatar avatarId={getPlayer(voterId)!.avatar} size={18} />
+                      )}
+                      {getPlayerName(voterId)}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
           </div>
@@ -71,22 +97,13 @@ const Results: React.FC<{
       </div>
 
       <div className="mt-8 text-center">
-        <p className="text-lg text-gray-600">
-          Moving to scores in <span className="font-bold text-indigo-600">{timeLeft}</span> seconds
-        </p>
-        <div className="mt-4 w-full bg-gray-200 rounded-full h-2.5">
-          <div
-            className="bg-indigo-600 h-2.5 rounded-full transition-all duration-1000 ease-linear"
-            style={{ width: `${(timeLeft / 30) * 100}%` }}
-          ></div>
-        </div>
+        <button
+          onClick={handleMoveToScores}
+          className="mt-6 py-3 px-8 rounded-full bg-white text-gray-900 border border-gray-200 text-sm font-medium tracking-wide shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-all active:scale-[0.98] cursor-pointer"
+        >
+          move to scores
+        </button>
       </div>
-      <button
-        onClick={handleMoveToScores}
-        className="mt-6 px-6 py-3 rounded-lg font-bold text-white bg-indigo-600 hover:bg-indigo-700"
-      >
-        Move to Scores
-      </button>
     </div>
   );
 };

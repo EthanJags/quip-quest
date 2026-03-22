@@ -5,6 +5,7 @@ const initialState: Player = {
   name: "",
   score: 0,
   isHost: false,
+  avatar: "",
 };
 
 const playerSlice = createSlice({
@@ -23,12 +24,15 @@ const playerSlice = createSlice({
     setPlayerIsHost: (state, action: PayloadAction<boolean>) => {
       state.isHost = action.payload;
     },
+    setPlayerAvatar: (state, action: PayloadAction<string>) => {
+      state.avatar = action.payload;
+    },
     resetPlayer: (state) => {
       state = initialState;
     },
   },
 });
 
-export const { setPlayerID, setPlayerName, setPlayerScore, setPlayerIsHost, resetPlayer } = playerSlice.actions;
+export const { setPlayerID, setPlayerName, setPlayerScore, setPlayerIsHost, setPlayerAvatar, resetPlayer } = playerSlice.actions;
 
 export default playerSlice.reducer;

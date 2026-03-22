@@ -7,7 +7,7 @@ declare interface Player {
   name: string;
   score: number;
   isHost: boolean;
-  // Add other player properties here if needed
+  avatar: string;
 }
 
 declare interface Games {
@@ -50,7 +50,7 @@ declare interface Game {
   gameActive: boolean;
   currentStage: GameStates;
   currentRound: number;
-  currentQuestion: string;
+  currentPrompt: string;
   timeRemaining: number;
   chatHistory: ChatMessage[];
   startTime: number;

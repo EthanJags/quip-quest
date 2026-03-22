@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import e from "express";
 
 const player: Player = {
   id: "",
   name: "",
   score: 0,
   isHost: false,
+  avatar: "",
 };
 
 const initialState: Game = {
@@ -23,7 +23,7 @@ const initialState: Game = {
   gameActive: false,
   currentStage: "Answering",
   currentRound: 1,
-  currentQuestion: "question",
+  currentPrompt: "",
   timeRemaining: 0,
   chatHistory: [],
   startTime: -1,
@@ -45,7 +45,7 @@ const resetState: Game = {
   gameActive: false,
   currentStage: "Answering",
   currentRound: 1,
-  currentQuestion: "question",
+  currentPrompt: "",
   timeRemaining: 0,
   chatHistory: [],
   startTime: -1,
@@ -62,9 +62,10 @@ const gameSlice = createSlice({
       state.latestAnswers = action.payload.latestAnswers;
       state.gameActive = action.payload.gameActive;
       state.currentStage = action.payload.currentStage;
-      state.currentQuestion = action.payload.currentQuestion;
+      state.currentPrompt = action.payload.currentPrompt;
       state.currentRound = action.payload.currentRound;
       state.timeRemaining = action.payload.timeRemaining;
+      state.startTime = action.payload.startTime;
     },
     setGameCode: (state, action: PayloadAction<number>) => {
       state.code = action.payload;
@@ -81,8 +82,8 @@ const gameSlice = createSlice({
     setCurrentStage: (state, action: PayloadAction<GameStates>) => {
       state.currentStage = action.payload;
     },
-    setCurrentQuestion: (state, action: PayloadAction<string>) => {
-      state.currentQuestion = action.payload;
+    setCurrentPrompt: (state, action: PayloadAction<string>) => {
+      state.currentPrompt = action.payload;
     },
     addPlayer: (state, action: PayloadAction<Player>) => {
       if (!state.players) {
@@ -118,7 +119,7 @@ export const {
   addPlayer,
   setGameActive,
   setCurrentStage,
-  setCurrentQuestion,
+  setCurrentPrompt,
   resetGame,
   setPlayers,
   incrementRound,

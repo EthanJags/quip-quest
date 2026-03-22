@@ -147,7 +147,7 @@ function getSocketIdFromPlayerId(playerId: ID) {
         gameActive: false,
         currentStage: "Answering",
         currentRound: 1,
-        currentQuestion: "",
+        currentPrompt: "",
         timeRemaining: 0,
         chatHistory: [],
         startTime: Date.now(),
@@ -183,14 +183,14 @@ function getSocketIdFromPlayerId(playerId: ID) {
         game.currentStage = "Answering";
         // Set current round to 1
         game.currentRound = 1;
-        // Set current question to getCurrentQuestion
-        game.currentQuestion = getRandomQuestion(game.gameSettings.promptDeck);
+        // Set current prompt
+        game.currentPrompt = getRandomQuestion(game.gameSettings.promptDeck);
         // Set latest answers to empty object
         game.latestAnswers = {};
         // set time remaining to timePerQuestion
         game.timeRemaining = game.gameSettings.timePerQuestion;
 
-        // Send first question to all players in the game room
+        // Send game update to all players in the game room
         io.to(gameRoom.toString()).emit("gameUpdate", { game: game, action: "startGame" });
         // start timer
         startTimer(game, game.gameSettings.timePerQuestion, gameRoom, () => {
@@ -307,10 +307,10 @@ function getSocketIdFromPlayerId(playerId: ID) {
       const game = games[gameRoom];
       // increment round
       game.currentRound++;
-      // get next question
-      const question = getRandomQuestion(game.gameSettings.promptDeck);
-      // set current question
-      game.currentQuestion = question;
+      // get next prompt
+      const prompt = getRandomQuestion(game.gameSettings.promptDeck);
+      // set current prompt
+      game.currentPrompt = prompt;
       // set current stage to answering
       game.currentStage = "Answering";
       // reset latest answers

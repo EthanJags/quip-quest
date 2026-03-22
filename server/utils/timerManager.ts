@@ -15,6 +15,7 @@ export function startTimer(
   }
 
   game.timeRemaining = duration;
+  game.startTime = Date.now();
 
   gameTimers[gameRoom] = setInterval(() => {
     game.timeRemaining--;

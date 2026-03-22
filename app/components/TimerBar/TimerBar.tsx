@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React from "react";
 import { useAppSelector } from "@/app/store/constants/reduxTypes";
 
 interface TimerBarProps {
@@ -7,7 +9,6 @@ interface TimerBarProps {
 
 const TimerBar: React.FC<TimerBarProps> = ({ timeRemaining }) => {
   const game = useAppSelector((state) => state.game);
-  const [totalTime, setTotalTime] = useState<number>(0);
 
   const getTotalTime = (stage: string): number => {
     switch (stage) {
@@ -24,36 +25,19 @@ const TimerBar: React.FC<TimerBarProps> = ({ timeRemaining }) => {
     }
   };
 
-  useEffect(() => {
-    setTotalTime(getTotalTime(game.currentStage));
-  }, [game.currentStage]);
-
-  const [interpolatedTime, setInterpolatedTime] = useState(timeRemaining);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setInterpolatedTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          return 0;
-        } else {
-          return prevTime - 1;
-        }
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [timeRemaining]);
-
-  const percentageRemaining = (interpolatedTime / totalTime) * 100;
+  const totalTime = getTotalTime(game.currentStage);
+  const percentageRemaining = totalTime > 0 ? (timeRemaining / totalTime) * 100 : 0;
 
   return (
-    <div className="w-full h-6 bg-gray-200 rounded-full overflow-hidden relative">
+    <div className="h-2.5 bg-white/40 rounded-full overflow-hidden relative">
       <div
-        className="h-full bg-green-500 transition-all duration-100 ease-linear"
+        className="h-full bg-gray-800 rounded-full transition-all duration-1000"
         style={{ width: `${percentageRemaining}%` }}
       />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-sm font-semibold text-white">{Math.ceil(interpolatedTime)} seconds left</span>
+        <span className="font-mono text-[9px] font-bold text-white drop-shadow-sm">
+          {Math.ceil(timeRemaining)}s
+        </span>
       </div>
     </div>
   );

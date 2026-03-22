@@ -3,8 +3,8 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 
 const COLORS = [
-  "#000000", "#ef4444", "#3b82f6", "#22c55e",
-  "#eab308", "#f97316", "#a855f7", "#ffffff",
+  "#FFFFFF", "#FF3A3A", "#3A7DFF", "#22C55E",
+  "#FFD600", "#F97316", "#A855F7", "#0B0B13",
 ];
 
 const BRUSH_SIZES = [
@@ -19,7 +19,7 @@ const DrawingCanvas: React.FC<{
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const lastPos = useRef<{ x: number; y: number } | null>(null);
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#0B0B13");
   const [brushSize, setBrushSize] = useState(8);
   const [isEraser, setIsEraser] = useState(false);
 
@@ -94,7 +94,7 @@ const DrawingCanvas: React.FC<{
         ref={canvasRef}
         width={400}
         height={300}
-        className="border-2 border-gray-300 rounded-lg bg-white cursor-crosshair w-full max-w-[400px]"
+        className="rounded-2xl border border-gray-200/60 bg-white cursor-crosshair w-full max-w-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)]"
         style={{ touchAction: "none" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -102,14 +102,14 @@ const DrawingCanvas: React.FC<{
         onPointerLeave={handlePointerUp}
       />
 
-      {/* Color palette */}
-      <div className="flex gap-2 mt-3 flex-wrap justify-center">
+      {/* Color palette — round swatches */}
+      <div className="flex gap-2 mt-4 flex-wrap justify-center">
         {COLORS.map((c) => (
           <button
             key={c}
             onClick={() => { setColor(c); setIsEraser(false); }}
-            className={`w-8 h-8 rounded-full border-2 transition-transform ${
-              color === c && !isEraser ? "border-indigo-500 scale-110" : "border-gray-300"
+            className={`w-8 h-8 rounded-full border-2 transition-all duration-150 ${
+              color === c && !isEraser ? "border-gray-900 scale-110 ring-2 ring-gray-900/20" : "border-gray-200"
             }`}
             style={{ backgroundColor: c }}
             aria-label={`Color ${c}`}
@@ -118,40 +118,37 @@ const DrawingCanvas: React.FC<{
       </div>
 
       {/* Tools row */}
-      <div className="flex gap-3 mt-3 items-center flex-wrap justify-center">
-        {/* Brush sizes */}
+      <div className="flex gap-1.5 mt-3 items-center flex-wrap justify-center">
         {BRUSH_SIZES.map((b) => (
           <button
             key={b.label}
             onClick={() => setBrushSize(b.size)}
-            className={`px-3 py-1 rounded text-sm font-bold transition-colors ${
+            className={`h-9 px-4 rounded-full text-xs font-medium tracking-wide transition-all active:scale-[0.97] cursor-pointer ${
               brushSize === b.size
-                ? "bg-indigo-500 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                ? "bg-gray-900 text-white shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
+                : "bg-white/70 text-gray-600 border border-gray-200 hover:bg-white"
             }`}
           >
             {b.label}
           </button>
         ))}
 
-        <div className="w-px h-6 bg-gray-300" />
+        <div className="w-px h-6 bg-gray-200 mx-1" />
 
-        {/* Eraser */}
         <button
           onClick={() => setIsEraser(!isEraser)}
-          className={`px-3 py-1 rounded text-sm font-bold transition-colors ${
+          className={`h-9 px-4 rounded-full text-xs font-medium tracking-wide transition-all active:scale-[0.97] cursor-pointer ${
             isEraser
-              ? "bg-pink-500 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-gray-900 text-white shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
+              : "bg-white/70 text-gray-600 border border-gray-200 hover:bg-white"
           }`}
         >
           Eraser
         </button>
 
-        {/* Clear */}
         <button
           onClick={handleClear}
-          className="px-3 py-1 rounded text-sm font-bold bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+          className="h-9 px-4 rounded-full text-xs font-medium tracking-wide border border-red-300 text-red-500 hover:bg-red-500 hover:text-white transition-all active:scale-[0.97] cursor-pointer"
         >
           Clear
         </button>
@@ -160,9 +157,9 @@ const DrawingCanvas: React.FC<{
       {/* Submit */}
       <button
         onClick={handleSubmit}
-        className="mt-4 bg-secondary hover:bg-secondary-dark text-white font-bold py-2 px-6 rounded transition duration-300 ease-in-out"
+        className="mt-4 w-full max-w-100 py-3.5 rounded-full bg-gray-900 text-white text-sm font-medium tracking-wide shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:bg-gray-800 hover:shadow-[0_6px_24px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:scale-[0.98] transition-all cursor-pointer"
       >
-        Submit Drawing
+        submit drawing
       </button>
     </div>
   );
